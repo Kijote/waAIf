@@ -10,7 +10,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 def version_tuple(value):
-    if not re.fullmatch(r"\\d+(?:\\.\\d+){1,3}", value):
+    if not re.fullmatch(r"\d+(?:\.\d+){1,3}", value):
         return None
     return tuple(int(x) for x in value.split("."))
 
