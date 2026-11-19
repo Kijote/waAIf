@@ -1,0 +1,20 @@
+{
+  "dataset": "synthetic-demo",
+  "advisories": [
+    {
+      "id": "DEMO-NGINX-HTTP2-001",
+      "product": "nginx",
+      "affected_from": "1.26.0",
+      "affected_before": "1.28.0",
+      "requires_feature": "http2",
+      "source_url": "https://nginx.org/en/security_advisories.html"
+    },
+    {
+      "id": "DEMO-NGINX-OTHER-002",
+      "product": "nginx",
+      "affected_from": "1.28.0",
+      "affected_before": "1.29.0",
+      "source_url": "https://nginx.org/en/security_advisories.html"
+    }
+  ]
+}
