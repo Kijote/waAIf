@@ -22,6 +22,19 @@ services:
       ADVISORIES_PATH: /fixtures/advisories.json
       OUTPUT_PATH: /reports/report.json
     network_mode: none
+  reconcile:
+    build: ./scanner
+    profiles: [reconcile]
+    entrypoint: ["sh", "-c", "python /app/inventory.py /project > /tmp/declared.json && python /app/reconcile.py /tmp/declared.json /fixtures/runtime-sample.json"]
+    read_only: true
+    tmpfs:
+      - /tmp
+    security_opt: [no-new-privileges:true]
+    cap_drop: [ALL]
+    volumes:
+      - ../..:/project:ro
+      - ./fixtures:/fixtures:ro
+    network_mode: none
   inventory:
     build: ./scanner
     entrypoint: ["python", "/app/inventory.py", "/project"]
