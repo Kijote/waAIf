@@ -25,7 +25,7 @@ services:
   reconcile:
     build: ./scanner
     profiles: [reconcile]
-    entrypoint: ["sh", "-c", "python /app/inventory.py /project > /tmp/declared.json && python /app/reconcile.py /tmp/declared.json /fixtures/runtime-sample.json"]
+    entrypoint: ["sh", "-c", "python /app/inventory.py /project > /tmp/declared.json && python /app/reconcile.py /tmp/declared.json ${RUNTIME_INPUT:-/fixtures/runtime-sample.json}"]
     read_only: true
     tmpfs:
       - /tmp
@@ -34,6 +34,7 @@ services:
     volumes:
       - ../..:/project:ro
       - ./fixtures:/fixtures:ro
+      - ./reports:/runtime:ro
     network_mode: none
   inventory:
     build: ./scanner
