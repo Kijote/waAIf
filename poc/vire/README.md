@@ -46,6 +46,15 @@ RUNTIME_INPUT=/runtime/runtime.json docker compose --profile reconcile run --bui
 
 The collector uses the host Docker CLI, not a socket mounted in VIRE. It exports sanitized runtime metadata only. Without an independently established expected digest, a matching tag is **not** considered verified. See [Docker Collector](docs/DOCKER-COLLECTOR.md).
 
+## Offline SBOM ingestion
+
+```sh
+cd poc/vire
+docker compose --profile sbom run --build --rm -T sbom
+```
+
+The default input is a synthetic CycloneDX JSON fixture. You can generate an SBOM externally and set `SBOM_INPUT=/runtime/image.cdx.json` after placing it in `reports/`. See [SBOM Ingestion](docs/SBOM-INGESTION.md).
+
 ## Tests
 ```sh
 cd poc/vire/scanner
