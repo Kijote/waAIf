@@ -22,6 +22,17 @@ services:
       ADVISORIES_PATH: /fixtures/advisories.json
       OUTPUT_PATH: /reports/report.json
     network_mode: none
+  sbom:
+    build: ./scanner
+    profiles: [sbom]
+    entrypoint: ["sh", "-c", "python /app/sbom.py ${SBOM_INPUT:-/fixtures/sample.cdx.json}"]
+    read_only: true
+    security_opt: [no-new-privileges:true]
+    cap_drop: [ALL]
+    volumes:
+      - ./fixtures:/fixtures:ro
+      - ./reports:/runtime:ro
+    network_mode: none
   reconcile:
     build: ./scanner
     profiles: [reconcile]
