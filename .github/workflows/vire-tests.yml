@@ -75,16 +75,19 @@ jobs:
           PY
       - name: Run offline reconciliation
         run: |
-          docker compose --profile reconcile run --build --rm reconcile > /tmp/vire-reconciliation.json
+          docker compose --profile reconcile run --build --rm -T reconcile > /tmp/vire-reconciliation.json
+          sed -n '/^{/,$p' /tmp/vire-reconciliation.json > /tmp/vire-reconciliation-clean.json
           python3 - <<'PY'
           import json
-          with open("/tmp/vire-reconciliation.json") as f:
+          with open("/tmp/vire-reconciliation-clean.json") as f:
               data = json.load(f)
           assert data["mode"] == "offline_reconciliation", data
           assert data["results"], "No reconciliation results"
           assert all(item["status"] in {"matched", "drift_detected", "needs_verification"} for item in data["results"])
           print("Offline reconciliation smoke test passed")
           PY
+      - name: Test host collector with mocked Docker CLI
+        run: python3 -m unittest discover -s collector -v -p 'test_*.py'
       - name: Cleanup
         if: always()
         run: docker compose --profile inventory down --remove-orphans
