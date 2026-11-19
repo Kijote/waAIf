@@ -27,6 +27,15 @@ The inventory command reads the repository root from `/project`, mounted read-on
 
 To scan another directory, explicitly replace the `../..:/project:ro` bind mount in the Compose inventory service with the desired absolute project path. Do not mount secrets or unrelated directories.
 
+## Offline runtime reconciliation
+
+```sh
+cd poc/vire
+docker compose --profile reconcile run --build --rm reconcile
+```
+
+This compares declarative Compose services against a **synthetic** runtime fixture; it does not query Docker Engine. Results are `matched`, `drift_detected`, or `needs_verification`. See [Runtime Reconciliation](docs/RUNTIME-RECONCILIATION.md).
+
 ## Tests
 ```sh
 cd poc/vire/scanner
