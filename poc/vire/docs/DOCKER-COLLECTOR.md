@@ -13,7 +13,13 @@ python3 collector/docker_collector.py --output reports/runtime.json
 
 Docker Engine and the Docker CLI must already be available on the host. The collector never starts, stops or changes containers.
 
-To analyze a runtime export, supply it explicitly to the offline reconciliation command (do not commit the export). The sample Compose reconciliation service currently uses the synthetic `fixtures/runtime-sample.json`; change its input mount to your generated JSON when testing real infrastructure.
+To analyze the exported runtime inventory, run:
+
+```sh
+RUNTIME_INPUT=/runtime/runtime.json docker compose --profile reconcile run --build --rm -T reconcile
+```
+
+The runtime directory is mounted read-only into the reconciliation container. Never commit the exported inventory.
 
 ## Important evidence limitations
 - Docker image IDs and `RepoDigests` are **not** automatically the expected deployment digest. The collector deliberately does not fabricate `expected_image_digest`.
