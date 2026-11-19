@@ -36,11 +36,22 @@ docker compose --profile reconcile run --build --rm reconcile
 
 This compares declarative Compose services against a **synthetic** runtime fixture; it does not query Docker Engine. Results are `matched`, `drift_detected`, or `needs_verification`. See [Runtime Reconciliation](docs/RUNTIME-RECONCILIATION.md).
 
+## Real Docker inventory (opt-in, host-side)
+
+```sh
+cd poc/vire
+python3 collector/docker_collector.py --output reports/runtime.json
+RUNTIME_INPUT=/runtime/runtime.json docker compose --profile reconcile run --build --rm -T reconcile
+```
+
+The collector uses the host Docker CLI, not a socket mounted in VIRE. It exports sanitized runtime metadata only. Without an independently established expected digest, a matching tag is **not** considered verified. See [Docker Collector](docs/DOCKER-COLLECTOR.md).
+
 ## Tests
 ```sh
 cd poc/vire/scanner
 python3 -m pip install -r requirements.txt
 python3 -m unittest -v
+python3 -m unittest discover -s ../collector -v -p 'test_*.py'
 ```
 
 Tests and Docker builds have not yet been executed in the development environment.
