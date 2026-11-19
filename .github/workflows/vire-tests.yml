@@ -73,6 +73,18 @@ jobs:
           assert "not_affected" in statuses, statuses
           print("Offline applicability smoke test passed")
           PY
+      - name: Run offline reconciliation
+        run: |
+          docker compose --profile reconcile run --build --rm reconcile > /tmp/vire-reconciliation.json
+          python3 - <<'PY'
+          import json
+          with open("/tmp/vire-reconciliation.json") as f:
+              data = json.load(f)
+          assert data["mode"] == "offline_reconciliation", data
+          assert data["results"], "No reconciliation results"
+          assert all(item["status"] in {"matched", "drift_detected", "needs_verification"} for item in data["results"])
+          print("Offline reconciliation smoke test passed")
+          PY
       - name: Cleanup
         if: always()
         run: docker compose --profile inventory down --remove-orphans
