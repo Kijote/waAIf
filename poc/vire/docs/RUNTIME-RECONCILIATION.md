@@ -26,11 +26,10 @@ A matching mutable tag is **not** proof of identity. A matching digest proves im
 ## Run
 ```sh
 cd poc/vire
-docker compose --profile inventory run --build --rm inventory > /tmp/vire-declared.json
-docker compose --profile inventory run --rm --entrypoint python inventory /app/reconcile.py /tmp/vire-declared.json /fixtures/runtime-sample.json
+docker compose --profile reconcile run --build --rm reconcile
 ```
 
-The second command above is **illustrative only**: the scanner image and mounts must be updated to include the reconciliation script and both input files. Use the documented one-shot reconciliation service once it is wired into Compose.
+The service generates a declarative inventory from the read-only project mount and compares it with a synthetic runtime fixture. The fixture does not represent the actual NGINX container.
 
 ## Acceptance tests
 Tests cover matching and mismatching digests, missing runtime, stopped service, changed reference, and unexpected runtime services.
