@@ -18,6 +18,7 @@ jobs:
   unit-tests:
     name: Unit tests (Python 3.12)
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     defaults:
       run:
         working-directory: poc/vire/scanner
@@ -36,6 +37,7 @@ jobs:
   docker-smoke:
     name: Docker Compose smoke tests
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     defaults:
       run:
         working-directory: poc/vire
