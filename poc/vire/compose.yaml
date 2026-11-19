@@ -6,7 +6,7 @@ services:
       - /var/cache/nginx
       - /var/run
     networks: [lab]
-    # Deliberately no published host port.
+    # No published host port.
   vire:
     build: ./scanner
     depends_on: [nginx]
@@ -16,10 +16,21 @@ services:
     volumes:
       - ./fixtures:/fixtures:ro
       - ./reports:/reports
+      - ../..:/project:ro
     environment:
       INVENTORY_PATH: /fixtures/nginx-sample.json
       ADVISORIES_PATH: /fixtures/advisories.json
       OUTPUT_PATH: /reports/report.json
+    network_mode: none
+  inventory:
+    build: ./scanner
+    entrypoint: ["python", "/app/inventory.py", "/project"]
+    profiles: [inventory]
+    read_only: true
+    security_opt: [no-new-privileges:true]
+    cap_drop: [ALL]
+    volumes:
+      - ../..:/project:ro
     network_mode: none
 networks:
   lab: {}
