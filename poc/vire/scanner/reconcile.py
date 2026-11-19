@@ -10,7 +10,7 @@ def reconcile(declared, runtime):
     services = {}
     for compose in declared.get("compose_files", []):
         for service in compose.get("services", []):
-            services[(compose["path"], service["service"])] = service
+            services[(Path(compose["path"]).name, service["service"])] = service
     observations = {(entry["compose_file"], entry["service"]): entry for entry in runtime.get("services", [])}
     results = []
     for key, service in sorted(services.items()):
