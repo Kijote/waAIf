@@ -86,6 +86,17 @@ jobs:
           assert all(item["status"] in {"matched", "drift_detected", "needs_verification"} for item in data["results"])
           print("Offline reconciliation smoke test passed")
           PY
+      - name: Validate offline CycloneDX SBOM ingestion
+        run: |
+          docker compose --profile sbom run --build --rm -T sbom > /tmp/vire-sbom.json
+          python3 - <<'PY'
+          import json
+          with open("/tmp/vire-sbom.json") as f:
+              data = json.load(f)
+          assert data["mode"] == "sbom_inventory", data
+          assert data["component_count"] == 2, data
+          assert all(not item["package_origin_verified"] for item in data["components"])
+          PY
       - name: Test host collector with mocked Docker CLI
         run: python3 -m unittest discover -s collector -v -p 'test_*.py'
       - name: Cleanup
