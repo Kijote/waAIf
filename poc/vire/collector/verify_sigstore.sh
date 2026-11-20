@@ -35,7 +35,7 @@ for line in data.splitlines():
     if not isinstance(entry, dict):
         raise SystemExit("Unexpected cosign output shape")
     payload = entry.get("payload")
-    if payload is not None and not isinstance(payload, dict):
+    if payload is not None and not isinstance(payload, (str, dict)):
         raise SystemExit("Unexpected payload shape")
 if not data.strip():
     raise SystemExit("cosign returned no verified attestations")
