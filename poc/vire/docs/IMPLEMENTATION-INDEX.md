@@ -28,3 +28,5 @@ Each new component must document: purpose, inputs/outputs and schemas, trust bou
 | Trusted Cosign verification and correlation | `collector/verify_and_correlate.py` | `docs/TRUSTED-COSIGN-FLOW.md` | Cosign CLI/trust roots not yet pinned; local runtime evidence unauthenticated |
 
 | Public OSV vulnerability candidates | `collector/osv_fetch.py`, `scanner/osv_analyze.py` | `docs/OSV-INTEGRATION.md` | Requires vendor/backport review; no live API integration test yet |
+
+| Debian/Ubuntu/Alpine advisory review | `scanner/vendor_review.py` | `docs/VENDOR-ADVISORY-REVIEW.md` | Normalized vendor inputs only; official feed adapters not yet implemented |
