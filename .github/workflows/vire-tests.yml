@@ -89,9 +89,10 @@ jobs:
       - name: Validate offline CycloneDX SBOM ingestion
         run: |
           docker compose --profile sbom run --build --rm -T sbom > /tmp/vire-sbom.json
+          sed -n '/^{/,$p' /tmp/vire-sbom.json > /tmp/vire-sbom-clean.json
           python3 - <<'PY'
           import json
-          with open("/tmp/vire-sbom.json") as f:
+          with open("/tmp/vire-sbom-clean.json") as f:
               data = json.load(f)
           assert data["mode"] == "sbom_inventory", data
           assert data["component_count"] == 2, data
