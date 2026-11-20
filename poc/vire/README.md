@@ -95,3 +95,7 @@ python3 scanner/signature.py --sbom reports/image.cdx.json --attestation reports
 ## Offline DSSE / in-toto verification
 
 `scanner/dsse.py` verifies an Ed25519 DSSE envelope containing a constrained in-toto Statement v1, using a separately configured public key. This is not Sigstore keyless verification. See [DSSE / in-toto](docs/DSSE-IN-TOTO.md).
+
+## Sigstore / Cosign keyless verification (opt-in)
+
+`collector/verify_sigstore.sh` invokes the official Cosign CLI on a trusted host with a pinned image digest and explicit certificate identity / OIDC issuer. It does **not** yet establish a VIRE `matched` result; see [Sigstore Verification](docs/SIGSTORE-VERIFICATION.md).
