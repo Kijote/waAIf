@@ -107,3 +107,7 @@ VIRE's local community workflow must remain free of mandatory paid APIs, subscri
 ## Correlate Cosign-verified SBOM evidence with runtime
 
 `scanner/cosign_binding.py` compares the verified CycloneDX predicate, signed image subject and Docker runtime digest. **It does not independently verify signatures**: supply only output from a trusted successful Cosign verification. See [Cosign Runtime Correlation](docs/COSIGN-RUNTIME-CORRELATION.md).
+
+## Trusted Cosign verification + correlation
+
+Use `collector/verify_and_correlate.py` on a trusted host to invoke Cosign and correlate the verified CycloneDX payload with Docker runtime in **one process**. Unlike `scanner/cosign_binding.py`, this command does not accept a preverified JSONL input. It requires no paid API. See [Trusted Cosign Flow](docs/TRUSTED-COSIGN-FLOW.md).
