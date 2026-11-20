@@ -103,3 +103,7 @@ python3 scanner/signature.py --sbom reports/image.cdx.json --attestation reports
 ## Community access and documentation
 
 VIRE's local community workflow must remain free of mandatory paid APIs, subscriptions and SaaS accounts. Every new external dependency requires a reviewed free-access path and offline fallback. See [Free Community Policy](docs/FREE-COMMUNITY-POLICY.md) and [Implementation Index](docs/IMPLEMENTATION-INDEX.md).
+
+## Correlate Cosign-verified SBOM evidence with runtime
+
+`scanner/cosign_binding.py` compares the verified CycloneDX predicate, signed image subject and Docker runtime digest. **It does not independently verify signatures**: supply only output from a trusted successful Cosign verification. See [Cosign Runtime Correlation](docs/COSIGN-RUNTIME-CORRELATION.md).
