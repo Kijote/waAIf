@@ -1,0 +1,105 @@
+name: VIRE PoC tests
+
+on:
+  push:
+    paths:
+      - "poc/vire/**"
+      - ".github/workflows/vire-tests.yml"
+  pull_request:
+    paths:
+      - "poc/vire/**"
+      - ".github/workflows/vire-tests.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  unit-tests:
+    name: Unit tests (Python 3.12)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: poc/vire/scanner
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: poc/vire/scanner/requirements.txt
+      - name: Install test dependencies
+        run: python -m pip install -r requirements.txt
+      - name: Run tests
+        run: python -m unittest discover -v -p 'test_*.py'
+
+  docker-smoke:
+    name: Docker Compose smoke tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: poc/vire
+    steps:
+      - uses: actions/checkout@v5
+      - name: Build PoC image
+        run: docker compose build vire inventory
+      - name: Inspect declarative inventory
+        run: |
+          docker compose --profile inventory run --rm inventory > /tmp/vire-inventory.json
+          python3 - <<'PY'
+          import json
+          with open("/tmp/vire-inventory.json") as f:
+              data = json.load(f)
+          assert data["mode"] == "declarative_only", data
+          assert data["dockerfiles"], "No Dockerfiles discovered"
+          assert data["compose_files"], "No Compose files discovered"
+          assert not data["errors"], data["errors"]
+          print("Declarative inventory smoke test passed")
+          PY
+      - name: Run offline applicability demo
+        run: |
+          mkdir -p reports
+          chmod 777 reports # temporary demo-only permission
+          docker compose up --abort-on-container-exit --exit-code-from vire
+          python3 - <<'PY'
+          import json
+          with open("reports/report.json") as f:
+              report = json.load(f)
+          assert report["mode"] == "offline_fixture", report
+          statuses = {entry["status"] for entry in report["results"]}
+          assert "affected" in statuses, statuses
+          assert "not_affected" in statuses, statuses
+          print("Offline applicability smoke test passed")
+          PY
+      - name: Run offline reconciliation
+        run: |
+          docker compose --profile reconcile run --build --rm -T reconcile > /tmp/vire-reconciliation.json
+          sed -n '/^{/,$p' /tmp/vire-reconciliation.json > /tmp/vire-reconciliation-clean.json
+          python3 - <<'PY'
+          import json
+          with open("/tmp/vire-reconciliation-clean.json") as f:
+              data = json.load(f)
+          assert data["mode"] == "offline_reconciliation", data
+          assert data["results"], "No reconciliation results"
+          assert all(item["status"] in {"matched", "drift_detected", "needs_verification"} for item in data["results"])
+          print("Offline reconciliation smoke test passed")
+          PY
+      - name: Validate offline CycloneDX SBOM ingestion
+        run: |
+          docker compose --profile sbom run --build --rm -T sbom > /tmp/vire-sbom.json
+          sed -n '/^{/,$p' /tmp/vire-sbom.json > /tmp/vire-sbom-clean.json
+          python3 - <<'PY'
+          import json
+          with open("/tmp/vire-sbom-clean.json") as f:
+              data = json.load(f)
+          assert data["mode"] == "sbom_inventory", data
+          assert data["component_count"] == 2, data
+          assert all(not item["package_origin_verified"] for item in data["components"])
+          PY
+      - name: Test host collector with mocked Docker CLI
+        run: python3 -m unittest discover -s collector -v -p 'test_*.py'
+      - name: Cleanup
+        if: always()
+        run: docker compose --profile inventory down --remove-orphans

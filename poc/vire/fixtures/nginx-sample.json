@@ -1,0 +1,9 @@
+{
+  "asset_id": "demo-nginx",
+  "product": "nginx",
+  "upstream_version": "1.27.0",
+  "distribution": "alpine",
+  "package_revision": null,
+  "vendor_fix_status": "unknown",
+  "features": {"http2": true}
+}
