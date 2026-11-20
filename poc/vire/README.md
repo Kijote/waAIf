@@ -115,3 +115,7 @@ Use `collector/verify_and_correlate.py` on a trusted host to invoke Cosign and c
 ## Public OSV vulnerability candidates (opt-in)
 
 `collector/osv_fetch.py` fetches OSV batch results to a local cache; `scanner/osv_analyze.py` analyzes that cache offline. No paid API is required. Findings are **potential**, pending vendor/backport review. See [OSV Integration](docs/OSV-INTEGRATION.md).
+
+## Distribution-specific vendor review (offline)
+
+`scanner/vendor_review.py` cross-checks OSV candidates against normalized Debian, Ubuntu and Alpine vendor evidence for an exact installed package revision. It does not yet fetch official vendor feeds or authenticate the normalized input. See [Vendor Advisory Review](docs/VENDOR-ADVISORY-REVIEW.md).
