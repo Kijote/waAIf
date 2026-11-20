@@ -99,3 +99,7 @@ python3 scanner/signature.py --sbom reports/image.cdx.json --attestation reports
 ## Sigstore / Cosign keyless verification (opt-in)
 
 `collector/verify_sigstore.sh` invokes the official Cosign CLI on a trusted host with a pinned image digest and explicit certificate identity / OIDC issuer. It does **not** yet establish a VIRE `matched` result; see [Sigstore Verification](docs/SIGSTORE-VERIFICATION.md).
+
+## Community access and documentation
+
+VIRE's local community workflow must remain free of mandatory paid APIs, subscriptions and SaaS accounts. Every new external dependency requires a reviewed free-access path and offline fallback. See [Free Community Policy](docs/FREE-COMMUNITY-POLICY.md) and [Implementation Index](docs/IMPLEMENTATION-INDEX.md).
