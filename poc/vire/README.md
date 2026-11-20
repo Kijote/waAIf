@@ -83,3 +83,11 @@ See [Infrastructure Inventory Architecture](docs/INVENTORY-ARCHITECTURE.md).
 3. NGINX effective configuration collection.
 4. Real NVD, CISA KEV, OSV and vendor advisory feeds with backport-aware matching.
 5. Deterministic remediation plan, operator approval, verification and rollback.
+
+## Signed SBOM binding
+
+Verify an independently signed SBOM-to-image claim with an explicitly trusted Ed25519 public key. No signing keys are bundled. See [Signed SBOM Attestations](docs/SIGNED-SBOM-ATTESTATIONS.md).
+
+```sh
+python3 scanner/signature.py --sbom reports/image.cdx.json --attestation reports/image.attestation.json --trusted-key /secure/trusted-ed25519-public.pem --runtime reports/runtime.json
+```
