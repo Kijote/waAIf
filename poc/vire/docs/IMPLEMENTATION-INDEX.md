@@ -22,3 +22,5 @@ Each new component must document: purpose, inputs/outputs and schemas, trust bou
 ## Current CI
 
 `.github/workflows/vire-tests.yml` runs Python unit tests and Docker smoke tests. Green CI does not mean real CVE coverage or production readiness.
+
+| Cosign SBOM/runtime correlation | `scanner/cosign_binding.py` | `docs/COSIGN-RUNTIME-CORRELATION.md` | Requires trusted Cosign output provenance; no standalone signature verification |
