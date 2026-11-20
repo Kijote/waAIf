@@ -55,6 +55,10 @@ docker compose --profile sbom run --build --rm -T sbom
 
 The default input is a synthetic CycloneDX JSON fixture. You can generate an SBOM externally and set `SBOM_INPUT=/runtime/image.cdx.json` after placing it in `reports/`. See [SBOM Ingestion](docs/SBOM-INGESTION.md).
 
+## SBOM-to-runtime digest checks
+
+Use `python3 scanner/attest.py SBOM_INVENTORY_JSON RUNTIME_JSON BINDING_JSON` to check whether a separately claimed SBOM image digest agrees with observed Docker registry digests. Matching digest evidence alone **never** authenticates an SBOM. See [SBOM Runtime Binding](docs/SBOM-RUNTIME-BINDING.md).
+
 ## Tests
 ```sh
 cd poc/vire/scanner
