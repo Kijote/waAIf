@@ -111,3 +111,7 @@ VIRE's local community workflow must remain free of mandatory paid APIs, subscri
 ## Trusted Cosign verification + correlation
 
 Use `collector/verify_and_correlate.py` on a trusted host to invoke Cosign and correlate the verified CycloneDX payload with Docker runtime in **one process**. Unlike `scanner/cosign_binding.py`, this command does not accept a preverified JSONL input. It requires no paid API. See [Trusted Cosign Flow](docs/TRUSTED-COSIGN-FLOW.md).
+
+## Public OSV vulnerability candidates (opt-in)
+
+`collector/osv_fetch.py` fetches OSV batch results to a local cache; `scanner/osv_analyze.py` analyzes that cache offline. No paid API is required. Findings are **potential**, pending vendor/backport review. See [OSV Integration](docs/OSV-INTEGRATION.md).
