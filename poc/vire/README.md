@@ -91,3 +91,7 @@ Verify an independently signed SBOM-to-image claim with an explicitly trusted Ed
 ```sh
 python3 scanner/signature.py --sbom reports/image.cdx.json --attestation reports/image.attestation.json --trusted-key /secure/trusted-ed25519-public.pem --runtime reports/runtime.json
 ```
+
+## Offline DSSE / in-toto verification
+
+`scanner/dsse.py` verifies an Ed25519 DSSE envelope containing a constrained in-toto Statement v1, using a separately configured public key. This is not Sigstore keyless verification. See [DSSE / in-toto](docs/DSSE-IN-TOTO.md).
