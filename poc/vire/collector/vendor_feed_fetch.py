@@ -15,7 +15,6 @@ from pathlib import Path
 SOURCES = {
     "debian": "https://security-tracker.debian.org/tracker/data/json",
     "alpine": "https://secdb.alpinelinux.org/{release}/{repository}.json",
-    "ubuntu": "https://git.launchpad.net/ubuntu-cve-tracker/plain/active/{cve}",
 }
 MAX_BYTES = 120 * 1024 * 1024
 
