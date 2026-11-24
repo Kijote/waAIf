@@ -34,3 +34,5 @@ Each new component must document: purpose, inputs/outputs and schemas, trust bou
 | Official Debian/Alpine feed snapshots | `collector/vendor_feed_fetch.py` | `docs/OFFICIAL-VENDOR-FEEDS.md` | Raw snapshots only; Ubuntu URL and normalization pending |
 
 | Debian/Alpine vendor fact normalization | `scanner/vendor_normalize.py` | `docs/VENDOR-FEED-NORMALIZATION.md` | No native version comparison; Ubuntu and real feed compatibility validation pending |
+
+| Debian/Alpine native version ordering | `collector/vendor_version_check.py` | `docs/NATIVE-VERSION-COMPARISON.md` | Opt-in host-side utility; not yet wired to authenticated installed package inventory |
