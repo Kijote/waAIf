@@ -123,3 +123,7 @@ Use `collector/verify_and_correlate.py` on a trusted host to invoke Cosign and c
 ## Official vendor feed snapshots (opt-in)
 
 `collector/vendor_feed_fetch.py` downloads raw official Debian and Alpine security feed snapshots, with SHA-256 and retrieval metadata, without paid services. Ubuntu's machine-readable connector is pending source verification. Raw snapshots are **not** normalized advisory decisions. See [Official Vendor Feeds](docs/OFFICIAL-VENDOR-FEEDS.md).
+
+## Normalize official Debian and Alpine advisories
+
+`scanner/vendor_normalize.py` extracts release-specific vendor advisory facts from downloaded snapshots without declaring installed packages fixed or vulnerable. See [Vendor Feed Normalization](docs/VENDOR-FEED-NORMALIZATION.md).
