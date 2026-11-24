@@ -29,3 +29,7 @@
 - Publish a versioned intelligence exchange protocol in this repository.
 - Develop the central Intelligence Cloud separately in a private repository.
 - Validate consent, privacy, anti-poisoning controls, and subscription boundaries.
+
+## Community cost and documentation gate
+
+Every required CE capability must have a no-cost local execution path. External providers must be free or have a documented usable free tier, with quota, licensing, privacy and offline fallback reviewed before adoption. No mandatory paid APIs or LLM subscriptions. All implementations require reproducible documentation and tests. See [VIRE community policy](poc/vire/docs/FREE-COMMUNITY-POLICY.md) and [implementation index](poc/vire/docs/IMPLEMENTATION-INDEX.md).

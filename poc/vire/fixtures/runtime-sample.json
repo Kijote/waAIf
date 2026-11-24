@@ -1,0 +1,14 @@
+{
+  "schema_version": "0.1.0",
+  "source": "external_fixture",
+  "services": [
+    {
+      "compose_file": "compose.yaml",
+      "service": "nginx",
+      "running": true,
+      "declared_image": "nginx:1.27-alpine",
+      "image_digest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "expected_image_digest": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+    }
+  ]
+}
