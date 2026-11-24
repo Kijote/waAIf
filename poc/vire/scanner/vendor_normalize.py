@@ -43,7 +43,7 @@ def normalize_alpine(data, release, repository, cve_ids):
         source = package["pkg"].get("name")
         if not isinstance(source, str) or not source:
             continue
-        for fixed in package.get("secfixes", {} ).items():
+        for fixed in package["pkg"].get("secfixes", {}).items():
             version, ids = fixed
             if not isinstance(version, str) or not isinstance(ids, list):
                 continue
