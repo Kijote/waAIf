@@ -32,3 +32,5 @@ Each new component must document: purpose, inputs/outputs and schemas, trust bou
 | Debian/Ubuntu/Alpine advisory review | `scanner/vendor_review.py` | `docs/VENDOR-ADVISORY-REVIEW.md` | Normalized vendor inputs only; official feed adapters not yet implemented |
 
 | Official Debian/Alpine feed snapshots | `collector/vendor_feed_fetch.py` | `docs/OFFICIAL-VENDOR-FEEDS.md` | Raw snapshots only; Ubuntu URL and normalization pending |
+
+| Debian/Alpine vendor fact normalization | `scanner/vendor_normalize.py` | `docs/VENDOR-FEED-NORMALIZATION.md` | No native version comparison; Ubuntu and real feed compatibility validation pending |
