@@ -30,3 +30,5 @@ Each new component must document: purpose, inputs/outputs and schemas, trust bou
 | Public OSV vulnerability candidates | `collector/osv_fetch.py`, `scanner/osv_analyze.py` | `docs/OSV-INTEGRATION.md` | Requires vendor/backport review; no live API integration test yet |
 
 | Debian/Ubuntu/Alpine advisory review | `scanner/vendor_review.py` | `docs/VENDOR-ADVISORY-REVIEW.md` | Normalized vendor inputs only; official feed adapters not yet implemented |
+
+| Official Debian/Alpine feed snapshots | `collector/vendor_feed_fetch.py` | `docs/OFFICIAL-VENDOR-FEEDS.md` | Raw snapshots only; Ubuntu URL and normalization pending |
