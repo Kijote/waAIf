@@ -127,3 +127,7 @@ Use `collector/verify_and_correlate.py` on a trusted host to invoke Cosign and c
 ## Normalize official Debian and Alpine advisories
 
 `scanner/vendor_normalize.py` extracts release-specific vendor advisory facts from downloaded snapshots without declaring installed packages fixed or vulnerable. See [Vendor Feed Normalization](docs/VENDOR-FEED-NORMALIZATION.md).
+
+## Native Debian and Alpine version comparison
+
+`collector/vendor_version_check.py` uses local `dpkg` or `apk` to compare an installed version against a vendor fixed version, without lexical shortcuts. It does not by itself assert vulnerability status. See [Native Version Comparison](docs/NATIVE-VERSION-COMPARISON.md).
