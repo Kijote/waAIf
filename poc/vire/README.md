@@ -119,3 +119,7 @@ Use `collector/verify_and_correlate.py` on a trusted host to invoke Cosign and c
 ## Distribution-specific vendor review (offline)
 
 `scanner/vendor_review.py` cross-checks OSV candidates against normalized Debian, Ubuntu and Alpine vendor evidence for an exact installed package revision. It does not yet fetch official vendor feeds or authenticate the normalized input. See [Vendor Advisory Review](docs/VENDOR-ADVISORY-REVIEW.md).
+
+## Official vendor feed snapshots (opt-in)
+
+`collector/vendor_feed_fetch.py` downloads raw official Debian and Alpine security feed snapshots, with SHA-256 and retrieval metadata, without paid services. Ubuntu's machine-readable connector is pending source verification. Raw snapshots are **not** normalized advisory decisions. See [Official Vendor Feeds](docs/OFFICIAL-VENDOR-FEEDS.md).
